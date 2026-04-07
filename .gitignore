@@ -1,0 +1,18 @@
+﻿# Node
+node_modules/
+backend/node_modules/
+
+# Build outputs
+www/
+android/.gradle/
+android/build/
+android/app/build/
+android/app/src/main/assets/public/
+
+# Runtime data
+backend/data/
+backend/.env
+
+# OS
+.DS_Store
+Thumbs.db

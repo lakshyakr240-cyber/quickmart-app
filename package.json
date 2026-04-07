@@ -1,0 +1,21 @@
+{
+  "name": "quickmart-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "QuickMart full stack workspace",
+  "scripts": {
+    "backend:start": "npm --prefix backend start",
+    "backend:dev": "npm --prefix backend run dev",
+    "mobile:prepare": "powershell -ExecutionPolicy Bypass -File scripts/prepare-www.ps1",
+    "mobile:install": "npm i @capacitor/core @capacitor/cli @capacitor/android",
+    "mobile:add-android": "npx cap add android",
+    "mobile:sync": "npx cap sync android",
+    "mobile:open": "npx cap open android"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^6.2.1",
+    "@capacitor/cli": "^6.2.1",
+    "@capacitor/core": "^6.2.1",
+    "typescript": "^6.0.2"
+  }
+}

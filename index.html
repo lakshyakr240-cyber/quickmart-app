@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickMart | Sasaram</title>
+    <link rel="stylesheet" href="./styles.css?v=20260407a" />
+  </head>
+  <body class="customer-page">
+    <div class="app-shell customer-shell">
+      <header class="top-header customer-top-header">
+        <div class="header-card">
+          <div class="delivery-strip">
+            <p class="delivery-minute">20-30 mins</p>
+            <div class="delivery-copy">
+              <h1 class="brand">
+                QuickMart
+                <small>Sasaram | Orange-Green Fresh Delivery</small>
+              </h1>
+              <p class="header-tagline">Groceries, fruits, medicines and daily essentials</p>
+            </div>
+            <div class="inline-row header-actions">
+              <span id="sessionPill" class="pill">Guest</span>
+              <button id="accountBtn" class="btn btn-secondary" type="button">Login</button>
+              <button id="settingsBtn" class="btn btn-secondary" type="button">My Profile</button>
+              <button id="cartToggleBtn" class="btn" type="button">Cart <span id="cartCountBadge">0</span></button>
+            </div>
+          </div>
+
+          <div class="search-wrap">
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Search atta, dal, milk, medicine..."
+              aria-label="Search products"
+            />
+            <button id="clearSearchBtn" class="btn btn-secondary" type="button">
+              Clear
+            </button>
+          </div>
+
+          <div class="top-chip-row">
+            <button class="top-chip active" type="button" data-quick-filter="All">All</button>
+            <button class="top-chip" type="button" data-quick-filter="Grocery">Grocery</button>
+            <button class="top-chip" type="button" data-quick-filter="Vegetables">Vegetables</button>
+            <button class="top-chip" type="button" data-quick-filter="Fruits">Fruits</button>
+            <button class="top-chip" type="button" data-quick-filter="Dairy">Dairy</button>
+            <button class="top-chip" type="button" data-quick-filter="Medicines">Medicines</button>
+            <button class="top-chip" type="button" data-quick-filter="Essentials">Essentials</button>
+          </div>
+
+          <div id="addressBar" class="info-bar"></div>
+        </div>
+      </header>
+
+      <section id="heroSection" class="hero-panel customer-hero">
+        <div class="hero-main">
+          <p class="hero-tag">Today’s Quick Deals</p>
+          <h2 class="hero-title">Fresh products at low prices with trusted local delivery</h2>
+          <p class="hero-copy">Designed for Sasaram customers. Fast ordering, clear tracking, low-data friendly.</p>
+        </div>
+        <div id="serviceSection" class="hero-events">
+          <article class="event-card">
+            <p class="event-title">Grocery Saver</p>
+            <p class="event-copy">Daily use items with value prices.</p>
+          </article>
+          <article class="event-card">
+            <p class="event-title">Fresh Veg & Fruits</p>
+            <p class="event-copy">Clean and fast delivered produce.</p>
+          </article>
+          <article class="event-card">
+            <p class="event-title">Quick Medicines</p>
+            <p class="event-copy">Need medicine urgently? we deliver fast.</p>
+          </article>
+          <article class="event-card">
+            <p class="event-title">Household Essentials</p>
+            <p class="event-copy">Cleaning and home care in minutes.</p>
+          </article>
+        </div>
+        <div class="hero-stats">
+          <article class="hero-stat">
+            <span>ETA</span>
+            <strong id="heroEta">20-30 mins</strong>
+          </article>
+          <article class="hero-stat">
+            <span>Min Order</span>
+            <strong id="heroMinOrder">&#8377;100</strong>
+          </article>
+          <article class="hero-stat">
+            <span>Delivery Fee</span>
+            <strong id="heroDeliveryFee">&#8377;15</strong>
+          </article>
+          <article class="hero-stat">
+            <span>Free Delivery</span>
+            <strong id="heroFreeCutoff">&#8377;300+</strong>
+          </article>
+        </div>
+      </section>
+
+      <main class="customer-main-stack">
+        <section id="categorySection" class="section-card">
+          <div class="row" style="margin-bottom: 8px">
+            <h2 class="section-title" style="margin:0">Shop by Category</h2>
+            <span class="muted">Tap category to filter instantly</span>
+          </div>
+          <div id="categoryGrid" class="category-grid"></div>
+        </section>
+
+        <section id="collectionsSection" class="section-card">
+          <div class="row" style="margin-bottom: 8px">
+            <h2 class="section-title" style="margin: 0">Popular Departments</h2>
+            <span class="muted">Tap any card to instantly filter</span>
+          </div>
+          <div id="collectionSections" class="collection-stack"></div>
+        </section>
+
+        <section id="productsSection" class="section-card">
+          <div class="row" style="margin-bottom: 10px">
+            <h2 id="productsTitle" class="section-title" style="margin: 0">Products</h2>
+            <span id="productSectionHint" class="muted">Simple cards, quick add, clear stock</span>
+          </div>
+          <div id="searchResultBar" class="search-result-bar hidden"></div>
+          <div id="productGrid" class="product-grid"></div>
+        </section>
+
+        <section id="ordersSection" class="section-card">
+          <h2 class="section-title">Track Your Order</h2>
+          <div id="ordersWrap" class="field-grid"></div>
+        </section>
+      </main>
+
+      <nav class="customer-bottom-nav" aria-label="Quick navigation">
+        <a id="homeDockBtn" class="nav-item" href="#heroSection">Home</a>
+        <a id="categoriesDockBtn" class="nav-item" href="#categorySection">Categories</a>
+        <a id="ordersDockBtn" class="nav-item" href="#ordersSection">Orders</a>
+        <button id="profileDockBtn" class="nav-item" type="button">Profile</button>
+        <button id="cartDockBtn" class="nav-item nav-cart" type="button">
+          Cart <span id="cartDockCount">0</span>
+        </button>
+      </nav>
+    </div>
+
+    <div id="cartModal" class="modal" aria-hidden="true">
+      <div class="modal-card" style="width:min(560px,100%)">
+        <div class="row">
+          <h3>Your Cart</h3>
+          <button id="closeCartBtn" class="btn btn-secondary" type="button">Close</button>
+        </div>
+
+        <div id="cartItems" class="cart-items"></div>
+
+        <div class="row" style="margin-top: 10px">
+          <span class="muted">Subtotal</span>
+          <strong id="subtotalValue">&#8377;0</strong>
+        </div>
+        <div class="row" style="margin-top: 6px">
+          <span class="muted">Delivery Fee</span>
+          <strong id="deliveryValue">&#8377;0</strong>
+        </div>
+        <div class="row" style="margin-top: 6px; margin-bottom: 8px">
+          <span class="muted">Total</span>
+          <strong id="totalValue" class="price">&#8377;0</strong>
+        </div>
+
+        <div id="progressMessage" class="info-bar"></div>
+
+        <div class="field-grid" style="margin-top: 10px">
+          <label class="muted">Payment Method</label>
+          <div class="inline-row">
+            <label class="inline-row"><input type="radio" name="payment" value="COD" checked /> Cash on Delivery</label>
+            <label class="inline-row"><input type="radio" name="payment" value="ONLINE" /> Online</label>
+          </div>
+        </div>
+
+        <button id="checkoutBtn" class="btn" style="width: 100%; margin-top: 10px" type="button">
+          Place Order
+        </button>
+      </div>
+    </div>
+
+    <div id="accountModal" class="modal" aria-hidden="true">
+      <div class="modal-card" style="width:min(620px,100%)">
+        <div class="row">
+          <h3>Customer Login & Profile</h3>
+          <button id="closeAccountBtn" class="btn btn-secondary" type="button">Close</button>
+        </div>
+
+        <div class="field-grid">
+          <div class="row">
+            <input id="customerPhoneInput" type="text" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number" />
+            <button id="customerSendOtpBtn" class="btn" type="button">Send OTP</button>
+          </div>
+          <div class="row">
+            <input id="customerOtpInput" type="text" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit OTP" />
+            <button id="customerVerifyOtpBtn" class="btn" type="button">Verify Login</button>
+          </div>
+          <p id="customerOtpHint" class="login-note">OTP demo/webhook mode as per admin settings.</p>
+        </div>
+
+        <div class="field-grid" style="margin-top:8px">
+          <h4>Profile</h4>
+          <input id="customerNameInput" type="text" placeholder="Your name" />
+          <div class="inline-row">
+            <button id="saveCustomerProfileBtn" class="btn" type="button">Save Profile</button>
+            <button id="logoutCustomerBtn" class="btn btn-secondary" type="button">Logout</button>
+          </div>
+        </div>
+
+        <div class="field-grid" style="margin-top:8px">
+          <h4>Saved Addresses</h4>
+          <div id="customerAddressList" class="field-grid"></div>
+          <div class="layout-split" style="grid-template-columns:1fr 1fr">
+            <input id="addressLabelInput" type="text" placeholder="Label (Home / Office)" />
+            <input id="addressPincodeInput" type="text" inputmode="numeric" maxlength="6" placeholder="Pincode" />
+          </div>
+          <input id="addressLine1Input" type="text" placeholder="House / Flat / Building" />
+          <input id="addressAreaInput" type="text" placeholder="Area / Locality" />
+          <input id="addressCityInput" type="text" value="Sasaram" placeholder="City" />
+          <button id="saveAddressBtn" class="btn" type="button">Save Address</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="settingsModal" class="modal" aria-hidden="true">
+      <div class="modal-card profile-modal-card" style="width:min(760px,100%)">
+        <div class="row">
+          <h3>My Profile & Settings</h3>
+          <button id="closeSettingsBtn" class="btn btn-secondary" type="button">Close</button>
+        </div>
+
+        <div class="profile-shell">
+          <section class="profile-hero-card">
+            <div class="profile-avatar">QM</div>
+            <div>
+              <h4 id="profileNameTitle">Your Account</h4>
+              <p id="profilePhoneTitle" class="muted">Login to manage your profile</p>
+            </div>
+          </section>
+
+          <section class="profile-quick-grid">
+            <button type="button" class="profile-quick-btn" data-profile-action="orders">Your Orders</button>
+            <button type="button" class="profile-quick-btn" data-profile-action="payment">Payment</button>
+            <button type="button" class="profile-quick-btn" data-profile-action="help">Need Help</button>
+          </section>
+
+          <section class="profile-group">
+            <h4 class="profile-group-title">Your Information</h4>
+            <button type="button" class="profile-link" data-profile-action="address">Address Book</button>
+            <button type="button" class="profile-link" data-profile-action="wishlist">Your Wishlist</button>
+            <button type="button" class="profile-link" data-profile-action="prescriptions">Your Prescriptions</button>
+            <button type="button" class="profile-link" data-profile-action="gst">GST Details</button>
+          </section>
+
+          <section class="profile-group">
+            <h4 class="profile-group-title">Payment & Coupons</h4>
+            <button type="button" class="profile-link" data-profile-action="payment-settings">Payment Settings</button>
+            <button type="button" class="profile-link" data-profile-action="gift-card">Claim Gift Card</button>
+            <button type="button" class="profile-link" data-profile-action="rewards">Collected Rewards</button>
+          </section>
+
+          <section class="profile-group">
+            <h4 class="profile-group-title">App Settings</h4>
+            <div class="field-grid profile-controls">
+              <label class="muted">Language</label>
+              <select id="languageSelect">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+              </select>
+
+              <label class="muted">Default Payment Method</label>
+              <select id="defaultPaymentSelect">
+                <option value="COD">Cash on Delivery</option>
+                <option value="ONLINE">Online Payment</option>
+              </select>
+
+              <input id="deliveryNoteInput" type="text" placeholder="Delivery instruction (e.g., Call before arrival)" />
+              <label class="inline-row"><input id="lowDataToggle" type="checkbox" checked /> Low data mode</label>
+              <label class="inline-row"><input id="orderAlertsToggle" type="checkbox" checked /> Order alerts</label>
+              <label class="inline-row"><input id="whatsappAlertsToggle" type="checkbox" /> WhatsApp updates</label>
+              <label class="inline-row"><input id="contactlessToggle" type="checkbox" /> Contactless delivery</label>
+              <label class="inline-row"><input id="autoOpenCartToggle" type="checkbox" checked /> Auto open cart after add</label>
+            </div>
+          </section>
+
+          <section class="profile-group">
+            <h4 class="profile-group-title">Other Information</h4>
+            <button type="button" class="profile-link" data-profile-action="share-app">Share the App</button>
+            <button type="button" class="profile-link" data-profile-action="about-us">About Us</button>
+            <button type="button" class="profile-link" data-profile-action="privacy">Account Privacy</button>
+            <button type="button" class="profile-link" data-profile-action="notification-preference">Notification Preference</button>
+          </section>
+
+          <div class="inline-row">
+            <button id="saveSettingsBtn" class="btn" type="button">Save Preferences</button>
+            <button id="profileLogoutBtn" class="btn btn-secondary" type="button">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
+    <script src="./quickmart-data.js?v=20260407a" defer></script>
+    <script src="./quickmart-config.js?v=20260407b" defer></script>
+    <script src="./quickmart-api-bridge.js?v=20260407a" defer></script>
+    <script src="./customer.js?v=20260407a" defer></script>
+  </body>
+</html>
+
+

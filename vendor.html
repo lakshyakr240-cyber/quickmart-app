@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickMart Vendor</title>
+    <link rel="stylesheet" href="./styles.css?v=20260407a" />
+  </head>
+  <body class="role-page">
+    <div class="app-shell">
+      <header class="top-header">
+        <div class="brand-row">
+          <h1 class="brand">
+            QuickMart Vendor Panel
+            <small>Internal vendor operations</small>
+          </h1>
+          <div class="inline-row">
+            <span id="vendorSessionPill" class="pill">Logged out</span>
+            <button id="vendorLogoutBtn" class="btn btn-secondary hidden" type="button">Logout</button>
+          </div>
+        </div>
+      </header>
+
+      <section id="vendorLoginSection" class="login-wrap">
+        <div class="login-card">
+          <h2>Vendor Login</h2>
+          <div class="field-grid">
+            <input id="vendorPhoneInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="10" autocomplete="tel" placeholder="Vendor phone" />
+            <input id="vendorPinInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" placeholder="PIN" />
+            <button id="vendorLoginBtn" class="btn" type="button">Login</button>
+            <button id="vendorRestoreDemoBtn" class="btn btn-secondary" type="button">Restore Demo Login</button>
+          </div>
+          <p class="login-note">Demo: 9001001001 / 1111, 9001001002 / 2222 (account active hona chahiye)</p>
+        </div>
+      </section>
+
+      <main id="vendorApp" class="hidden">
+        <section class="section-card">
+          <h2 class="section-title">Stock Toggle</h2>
+          <div id="vendorProductsWrap" class="table-wrap"></div>
+        </section>
+
+        <section class="section-card">
+          <h2 class="section-title">Incoming Orders (Accept / Reject)</h2>
+          <div id="vendorPendingOrdersWrap" class="table-wrap"></div>
+        </section>
+
+        <section class="section-card">
+          <h2 class="section-title">Recent Orders</h2>
+          <div id="vendorRecentOrdersWrap" class="table-wrap"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./quickmart-data.js?v=20260407a" defer></script>
+    <script src="./quickmart-config.js?v=20260407b" defer></script>
+    <script src="./quickmart-api-bridge.js?v=20260407a" defer></script>
+    <script src="./vendor.js?v=20260407a" defer></script>
+  </body>
+</html>
+
+
+

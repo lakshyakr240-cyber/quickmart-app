@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickMart Delivery</title>
+    <link rel="stylesheet" href="./styles.css?v=20260407a" />
+  </head>
+  <body class="role-page">
+    <div class="app-shell">
+      <header class="top-header">
+        <div class="brand-row">
+          <h1 class="brand">
+            QuickMart Delivery Panel
+            <small>Internal delivery operations</small>
+          </h1>
+          <div class="inline-row">
+            <span id="deliverySessionPill" class="pill">Logged out</span>
+            <button id="deliverySwitchBtn" class="btn btn-secondary hidden" type="button">Switch Partner</button>
+            <button id="deliveryLogoutBtn" class="btn btn-secondary hidden" type="button">Logout</button>
+          </div>
+        </div>
+      </header>
+
+      <section id="deliveryLoginSection" class="login-wrap">
+        <div class="login-card">
+          <h2>Delivery Partner Login</h2>
+          <div class="field-grid">
+            <input id="deliveryPhoneInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="10" autocomplete="tel" placeholder="Phone" />
+            <input id="deliveryPinInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" placeholder="PIN" />
+            <button id="deliveryLoginBtn" class="btn" type="button">Login</button>
+            <div class="inline-row">
+              <button id="deliveryQuickRaviBtn" class="btn btn-secondary" type="button">Quick Login Ravi</button>
+              <button id="deliveryQuickAmanBtn" class="btn btn-secondary" type="button">Quick Login Aman</button>
+            </div>
+          </div>
+          <p class="login-note">Demo: 9111100011 / 3333, 9111100022 / 4444 (account active hona chahiye)</p>
+          <div class="field-grid">
+            <h3 style="font-size:0.92rem">Admin Added Partners (Auto)</h3>
+            <div id="deliveryPartnerQuickList" class="inline-row"></div>
+          </div>
+        </div>
+      </section>
+
+      <main id="deliveryApp" class="hidden">
+        <section class="section-card">
+          <h2 class="section-title">Assigned Orders</h2>
+          <p class="muted" style="margin-bottom: 8px">Mark Picked Up appears when order reaches Ready for Pickup.</p>
+          <div id="assignedOrdersWrap" class="table-wrap"></div>
+        </section>
+
+        <section class="section-card">
+          <h2 class="section-title">Delivered Orders</h2>
+          <div id="deliveredOrdersWrap" class="table-wrap"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./quickmart-data.js?v=20260407a" defer></script>
+    <script src="./quickmart-config.js?v=20260407b" defer></script>
+    <script src="./quickmart-api-bridge.js?v=20260407a" defer></script>
+    <script src="./delivery.js?v=20260407a" defer></script>
+  </body>
+</html>
+
+
+

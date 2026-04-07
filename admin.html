@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickMart Admin</title>
+    <link rel="stylesheet" href="./styles.css?v=20260407a" />
+  </head>
+  <body class="role-page">
+    <div class="app-shell">
+      <header class="top-header">
+        <div class="brand-row">
+          <h1 class="brand">
+            QuickMart Admin
+            <small>Internal dashboard (not for customers)</small>
+          </h1>
+          <div class="inline-row">
+            <span id="adminSessionPill" class="pill">Logged out</span>
+            <button id="adminLogoutBtn" class="btn btn-secondary hidden" type="button">Logout</button>
+          </div>
+        </div>
+      </header>
+
+      <section id="adminLoginSection" class="login-wrap">
+        <div class="login-card">
+          <h2>Admin Login</h2>
+          <div class="field-grid">
+            <input id="adminEmailInput" type="email" placeholder="Admin email" />
+            <input id="adminPasswordInput" type="password" placeholder="Password" />
+            <button id="adminLoginBtn" class="btn" type="button">Login</button>
+          </div>
+          <p class="login-note">Demo default: admin@quickmart.in / admin123</p>
+        </div>
+      </section>
+
+      <main id="adminApp" class="hidden">
+        <section class="section-card">
+          <h2 class="section-title">Analytics</h2>
+          <div id="analyticsGrid" class="stat-grid"></div>
+        </section>
+
+        <section class="section-card">
+          <h2 class="section-title">Delivery Pricing Settings</h2>
+          <div class="layout-split">
+            <form id="pricingForm" class="field-grid">
+              <input id="minOrderInput" type="number" min="1" placeholder="Minimum order value" />
+              <input id="deliveryFeeInput" type="number" min="0" placeholder="Delivery fee" />
+              <input id="freeThresholdInput" type="number" min="1" placeholder="Free delivery threshold" />
+              <button class="btn" type="submit">Save Pricing</button>
+            </form>
+            <div class="login-note">
+              Rules:
+              <br />
+              - Minimum order value applies before checkout.
+              <br />
+              - Delivery fee applies when order is below free threshold.
+              <br />
+              - Free delivery shown with progress message.
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card">
+          <h2 class="section-title">OTP Settings (Customer Verification)</h2>
+          <div class="layout-split">
+            <form id="otpForm" class="field-grid">
+              <select id="otpModeInput">
+                <option value="demo">Demo OTP (shown on screen)</option>
+                <option value="webhook">Real SMS via Webhook</option>
+              </select>
+              <input id="otpWebhookInput" type="url" placeholder="https://your-domain.com/api/send-otp" />
+              <button class="btn" type="submit">Save OTP Settings</button>
+            </form>
+            <div class="login-note">
+              <strong>Webhook</strong> mode sends real OTP SMS to customer phone.
+              <br />
+              Webhook request body fields: <strong>mobile</strong>, <strong>otp</strong>, <strong>app</strong>, <strong>city</strong>.
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card">
+          <h2 class="section-title">Live Order Monitoring + Assignment</h2>
+          <div id="ordersTableWrap" class="table-wrap"></div>
+        </section>
+
+        <section class="section-card">
+          <h2 class="section-title">Catalog Management</h2>
+
+          <div class="layout-split">
+            <form id="categoryForm" class="field-grid">
+              <h3>Add Category</h3>
+              <input id="categoryNameInput" type="text" placeholder="Category name" />
+              <button class="btn" type="submit">Add Category</button>
+              <div id="categoriesWrap" class="field-grid"></div>
+            </form>
+
+            <form id="productForm" class="field-grid">
+              <h3 id="productFormTitle">Add Product</h3>
+              <input id="productNameInput" type="text" placeholder="Product name" />
+              <input id="productWeightInput" type="text" placeholder="Weight (e.g., 500 g)" />
+              <input id="productPriceInput" type="number" min="1" placeholder="Price" />
+              <select id="productCategoryInput"></select>
+              <input id="productImageInput" type="text" placeholder="Image URL (optional)" />
+              <input id="productImageFileInput" type="file" accept="image/*" />
+              <div id="productImagePreviewWrap" class="image-preview hidden">
+                <img id="productImagePreview" alt="Selected product image preview" />
+                <button id="clearProductImageBtn" class="btn btn-secondary" type="button">
+                  Clear Selected Image
+                </button>
+              </div>
+              <p class="muted">Paste image URL or upload image file directly.</p>
+              <label class="inline-row">
+                <input id="productStockInput" type="checkbox" checked />
+                In stock
+              </label>
+              <div class="inline-row">
+                <button class="btn" type="submit">Save Product</button>
+                <button id="cancelProductEditBtn" class="btn btn-secondary hidden" type="button">Cancel Edit</button>
+              </div>
+            </form>
+          </div>
+
+          <div id="productsTableWrap" class="table-wrap" style="margin-top: 12px"></div>
+        </section>
+
+        <section class="section-card">
+          <h2 class="section-title">Users / Vendors / Delivery Management</h2>
+
+          <div class="layout-split">
+            <div class="field-grid">
+              <h3>Users</h3>
+              <div id="usersTableWrap" class="table-wrap"></div>
+            </div>
+
+            <div class="field-grid">
+              <h3>Add Vendor</h3>
+              <form id="vendorForm" class="field-grid">
+                <input id="vendorNameInput" type="text" placeholder="Vendor name" />
+                <input id="vendorPhoneInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="10" placeholder="Phone" />
+                <input id="vendorPinInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="4-digit PIN" />
+                <button class="btn" type="submit">Add Vendor</button>
+              </form>
+              <div id="vendorsTableWrap" class="table-wrap"></div>
+            </div>
+          </div>
+
+          <div class="field-grid" style="margin-top: 10px">
+            <h3>Add Delivery Partner</h3>
+            <form id="deliveryForm" class="field-grid">
+              <input id="deliveryNameInput" type="text" placeholder="Partner name" />
+              <input id="deliveryPhoneInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="10" placeholder="Phone" />
+              <input id="deliveryPinInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="4-digit PIN" />
+              <button class="btn" type="submit">Add Delivery Partner</button>
+            </form>
+            <div id="deliveryTableWrap" class="table-wrap"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./quickmart-data.js?v=20260407a" defer></script>
+    <script src="./quickmart-config.js?v=20260407b" defer></script>
+    <script src="./quickmart-api-bridge.js?v=20260407a" defer></script>
+    <script src="./admin.js?v=20260407a" defer></script>
+  </body>
+</html>
+
+
+
