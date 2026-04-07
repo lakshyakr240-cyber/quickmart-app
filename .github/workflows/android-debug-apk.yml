@@ -36,7 +36,8 @@ jobs:
           cp admin.js www/
           cp vendor.js www/
           cp delivery.js www/
-
+      - name: Capacitor add android platform
+        run: npx cap add android || echo "Android platform already exists"
       - name: Capacitor sync android
         run: npx cap sync android
 
