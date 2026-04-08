@@ -189,8 +189,8 @@
     }
 
     if (!active) {
-      title.textContent = "Products";
-      hint.textContent = "Simple cards, quick add, clear stock";
+      title.textContent = "\u26a1 Popular Items";
+      hint.textContent = "Daily fresh picks for you";
       bar.classList.add("hidden");
       bar.textContent = "";
       return;
@@ -229,6 +229,19 @@
     return selected.label + ": " + selected.line1 + ", " + selected.area + ", " + selected.city + " - " + selected.pincode;
   }
 
+  function currentAddressShort(profile) {
+    if (!profile || !Array.isArray(profile.addresses)) {
+      return "Add Address";
+    }
+    var selected = profile.addresses.find(function (a) {
+      return a.id === profile.defaultAddressId;
+    });
+    if (!selected) {
+      return "Add Address";
+    }
+    return selected.label + " - " + selected.area;
+  }
+
   function renderSessionInfo() {
     var session = QuickMartData.getCustomerSession();
     byId("sessionPill").textContent = sessionText();
@@ -240,10 +253,23 @@
     var bar = byId("addressBar");
     var profile = currentProfile();
     var addressText = currentAddressText(profile);
-    bar.innerHTML =
-      "<strong>Delivery:</strong> " +
-      escapeHtml(addressText) +
-      ' <button id="manageAddressBtn" class="action-link" type="button">Manage</button>';
+    var shortAddressText = currentAddressShort(profile);
+
+    if (bar) {
+      bar.innerHTML =
+        "<strong>Delivery:</strong> " +
+        escapeHtml(addressText) +
+        ' <button id="manageAddressBtn" class="action-link" type="button">Manage</button>';
+    }
+
+    var promoAddress = byId("promoAddressText");
+    if (promoAddress) {
+      promoAddress.textContent = shortAddressText;
+    }
+    var promoAddressSecondary = byId("promoAddressTextSecondary");
+    if (promoAddressSecondary) {
+      promoAddressSecondary.textContent = shortAddressText;
+    }
 
     var manageBtn = byId("manageAddressBtn");
     if (manageBtn) {
@@ -808,14 +834,31 @@
       });
 
       if (!paymentOrder || !paymentOrder.ok) {
-        alert((paymentOrder && paymentOrder.message) || "Unable to start online payment.");
-        return;
+        var paymentErrorMessage = String((paymentOrder && paymentOrder.message) || "Unable to start online payment.");
+        var isBackendOffline =
+          paymentErrorMessage.toLowerCase().includes("backend not connected") ||
+          paymentErrorMessage.toLowerCase().includes("rpc unreachable") ||
+          paymentErrorMessage.toLowerCase().includes("failed to fetch") ||
+          paymentErrorMessage.toLowerCase().includes("networkerror");
+
+        if (isBackendOffline) {
+          paymentMethod = "COD";
+          paymentMeta.paymentStatus = "COD_PENDING";
+          paymentMeta.paymentReference = "";
+          paymentMeta.paymentProviderOrderId = "";
+          alert("Online payment server connected nahi hai. Order ab Cash on Delivery (COD) se place hoga.");
+        } else {
+          alert(paymentErrorMessage);
+          return;
+        }
       }
 
-      paymentMeta.paymentStatus = "CREATED";
-      paymentMeta.paymentProviderOrderId = String((paymentOrder.order && paymentOrder.order.id) || "");
+      if (paymentMethod === "ONLINE") {
+        paymentMeta.paymentStatus = "CREATED";
+        paymentMeta.paymentProviderOrderId = String((paymentOrder.order && paymentOrder.order.id) || "");
+      }
 
-      if (window.Razorpay && paymentOrder.keyId && paymentOrder.order && paymentOrder.order.id) {
+      if (paymentMethod === "ONLINE" && window.Razorpay && paymentOrder.keyId && paymentOrder.order && paymentOrder.order.id) {
         var verification = await new Promise(function (resolve) {
           var checkout = new window.Razorpay({
             key: paymentOrder.keyId,
@@ -849,7 +892,7 @@
 
         paymentMeta.paymentStatus = "PAID";
         paymentMeta.paymentReference = String(verification.paymentId || verification.razorpay_payment_id || "");
-      } else {
+      } else if (paymentMethod === "ONLINE") {
         alert("Razorpay checkout is not loaded, order will be placed as online pending.");
       }
     }
@@ -900,6 +943,25 @@
     byId("clearSearchBtn").addEventListener("click", function () {
       resetSearchAndShowHome();
     });
+
+    var quickManageAddressBtn = byId("quickManageAddressBtn");
+    if (quickManageAddressBtn) {
+      quickManageAddressBtn.addEventListener("click", function () {
+        openModal("accountModal");
+        renderAccountModal();
+      });
+    }
+
+    var shopNowBtn = byId("shopNowBtn");
+    if (shopNowBtn) {
+      shopNowBtn.addEventListener("click", function () {
+        resetSearchAndShowHome();
+        var productsSection = byId("productsSection");
+        if (productsSection && typeof productsSection.scrollIntoView === "function") {
+          productsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    }
 
     byId("cartToggleBtn").addEventListener("click", function () {
       openModal("cartModal");

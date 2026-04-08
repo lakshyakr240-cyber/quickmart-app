@@ -4,20 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QuickMart | Sasaram</title>
-    <link rel="stylesheet" href="./styles.css?v=20260407a" />
+    <link rel="stylesheet" href="./styles.css?v=20260408a" />
   </head>
-  <body class="customer-page">
+  <body class="customer-page blink-home">
     <div class="app-shell customer-shell">
       <header class="top-header customer-top-header">
         <div class="header-card">
           <div class="delivery-strip">
-            <p class="delivery-minute">20-30 mins</p>
             <div class="delivery-copy">
+              <p class="delivery-minute">20-30 MINS</p>
               <h1 class="brand">
                 QuickMart
                 <small>Sasaram | Orange-Green Fresh Delivery</small>
               </h1>
-              <p class="header-tagline">Groceries, fruits, medicines and daily essentials</p>
             </div>
             <div class="inline-row header-actions">
               <span id="sessionPill" class="pill">Guest</span>
@@ -31,7 +30,7 @@
             <input
               id="searchInput"
               type="search"
-              placeholder="Search atta, dal, milk, medicine..."
+              placeholder="Search groceries, milk, fruits"
               aria-label="Search products"
             />
             <button id="clearSearchBtn" class="btn btn-secondary" type="button">
@@ -53,48 +52,45 @@
         </div>
       </header>
 
-      <section id="heroSection" class="hero-panel customer-hero">
-        <div class="hero-main">
-          <p class="hero-tag">Today’s Quick Deals</p>
-          <h2 class="hero-title">Fresh products at low prices with trusted local delivery</h2>
-          <p class="hero-copy">Designed for Sasaram customers. Fast ordering, clear tracking, low-data friendly.</p>
-        </div>
-        <div id="serviceSection" class="hero-events">
-          <article class="event-card">
-            <p class="event-title">Grocery Saver</p>
-            <p class="event-copy">Daily use items with value prices.</p>
-          </article>
-          <article class="event-card">
-            <p class="event-title">Fresh Veg & Fruits</p>
-            <p class="event-copy">Clean and fast delivered produce.</p>
-          </article>
-          <article class="event-card">
-            <p class="event-title">Quick Medicines</p>
-            <p class="event-copy">Need medicine urgently? we deliver fast.</p>
-          </article>
-          <article class="event-card">
-            <p class="event-title">Household Essentials</p>
-            <p class="event-copy">Cleaning and home care in minutes.</p>
-          </article>
-        </div>
-        <div class="hero-stats">
-          <article class="hero-stat">
-            <span>ETA</span>
-            <strong id="heroEta">20-30 mins</strong>
-          </article>
-          <article class="hero-stat">
-            <span>Min Order</span>
-            <strong id="heroMinOrder">&#8377;100</strong>
-          </article>
-          <article class="hero-stat">
-            <span>Delivery Fee</span>
-            <strong id="heroDeliveryFee">&#8377;15</strong>
-          </article>
-          <article class="hero-stat">
-            <span>Free Delivery</span>
-            <strong id="heroFreeCutoff">&#8377;300+</strong>
-          </article>
-        </div>
+      <section id="heroSection" class="home-banner-stack">
+        <article class="promo-banner-card">
+          <p class="promo-address-line"><span>??</span> Deliver to: <strong id="promoAddressText">Add Address</strong></p>
+          <div class="promo-content">
+            <div class="promo-left">
+              <p class="promo-title">Free delivery <span>above &#8377;300</span></p>
+              <p class="promo-eta"><span>??</span> 20 min delivery</p>
+              <button id="shopNowBtn" class="btn promo-shop-btn" type="button">Shop Now</button>
+            </div>
+            <div class="promo-art" aria-hidden="true">
+              <span class="promo-emoji">??</span>
+              <span class="promo-emoji-sm">??????</span>
+            </div>
+          </div>
+        </article>
+        <article class="mini-address-card">
+          <span class="mini-pin">??</span>
+          <span>Deliver to: <strong id="promoAddressTextSecondary">Add Address</strong></span>
+          <button id="quickManageAddressBtn" class="action-link" type="button">Manage</button>
+        </article>
+      </section>
+
+      <section class="mini-stats-grid">
+        <article class="mini-stat-card">
+          <span>ETA</span>
+          <strong id="heroEta">20-30 mins</strong>
+        </article>
+        <article class="mini-stat-card">
+          <span>Min Order</span>
+          <strong id="heroMinOrder">&#8377;100</strong>
+        </article>
+        <article class="mini-stat-card">
+          <span>Delivery Fee</span>
+          <strong id="heroDeliveryFee">&#8377;15</strong>
+        </article>
+        <article class="mini-stat-card">
+          <span>Free Delivery</span>
+          <strong id="heroFreeCutoff">&#8377;300+</strong>
+        </article>
       </section>
 
       <main class="customer-main-stack">
@@ -106,7 +102,7 @@
           <div id="categoryGrid" class="category-grid"></div>
         </section>
 
-        <section id="collectionsSection" class="section-card">
+        <section id="collectionsSection" class="section-card hidden">
           <div class="row" style="margin-bottom: 8px">
             <h2 class="section-title" style="margin: 0">Popular Departments</h2>
             <span class="muted">Tap any card to instantly filter</span>
@@ -116,8 +112,8 @@
 
         <section id="productsSection" class="section-card">
           <div class="row" style="margin-bottom: 10px">
-            <h2 id="productsTitle" class="section-title" style="margin: 0">Products</h2>
-            <span id="productSectionHint" class="muted">Simple cards, quick add, clear stock</span>
+            <h2 id="productsTitle" class="section-title" style="margin: 0">&#9889; Popular Items</h2>
+            <span id="productSectionHint" class="muted">Daily fresh picks for you</span>
           </div>
           <div id="searchResultBar" class="search-result-bar hidden"></div>
           <div id="productGrid" class="product-grid"></div>
@@ -299,11 +295,12 @@
     </div>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
-    <script src="./quickmart-data.js?v=20260407a" defer></script>
-    <script src="./quickmart-config.js?v=20260407b" defer></script>
-    <script src="./quickmart-api-bridge.js?v=20260407a" defer></script>
-    <script src="./customer.js?v=20260407a" defer></script>
+    <script src="./quickmart-data.js?v=20260408a" defer></script>
+    <script src="./quickmart-config.js?v=20260408a" defer></script>
+    <script src="./quickmart-api-bridge.js?v=20260408b" defer></script>
+    <script src="./customer.js?v=20260408a" defer></script>
   </body>
 </html>
+
 
 

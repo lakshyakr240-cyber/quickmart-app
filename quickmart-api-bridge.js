@@ -18,6 +18,18 @@
     return configured.replace(/\/$/, "");
   }
 
+  function explicitApiBase() {
+    return String(runtimeApiBase() || window.localStorage.getItem(API_BASE_KEY) || "").trim();
+  }
+
+  function rpcEnabled() {
+    var protocol = window.location && window.location.protocol ? window.location.protocol : "";
+    if (protocol === "file:" && !explicitApiBase()) {
+      return false;
+    }
+    return true;
+  }
+
   function getClientId() {
     var id = window.localStorage.getItem(CLIENT_ID_KEY);
     if (id) return id;
@@ -53,6 +65,9 @@
   }
 
   function rpcSync(method, args) {
+    if (!rpcEnabled()) {
+      return { ok: false, message: "RPC disabled in file mode" };
+    }
     try {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", getApiBase() + "/api/rpc", false);
@@ -73,6 +88,9 @@
   }
 
   function rpcAsync(method, args) {
+    if (!rpcEnabled()) {
+      return Promise.resolve({ ok: false, message: "RPC disabled in file mode" });
+    }
     return fetch(getApiBase() + "/api/rpc", {
       method: "POST",
       headers: {
@@ -98,6 +116,9 @@
   }
 
   function postJsonAsync(path, payload) {
+    if (!rpcEnabled()) {
+      return Promise.resolve({ ok: false, message: "Backend not connected." });
+    }
     return fetch(getApiBase() + path, {
       method: "POST",
       headers: {
